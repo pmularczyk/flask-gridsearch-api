@@ -55,10 +55,12 @@ snap install postman
 
 ## Start flask application
 
-The next step after creating the database is starting the flask app like this
+The next step after creating the database is starting the flask app like this:
+With the parameters you can specify the database you want to connect to. In this case it is the database with
+the table from the `database_creator`
 
 ```
-python3 flask_app.py
+python3 flask_app.py --path=/home/user/databases --name=my_db.sqlite 
 ```
 
 Now the application is running in this location `http://127.0.0.1:5002/` and you can send POST and GET requests.
