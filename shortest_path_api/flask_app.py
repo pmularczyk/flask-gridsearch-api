@@ -1,7 +1,9 @@
 # Standard library imports
+import argparse
 import re
 import time
 import uuid
+from pathlib import Path
 
 # Third party imports
 from flask import Flask
@@ -11,11 +13,20 @@ from sqlalchemy import create_engine
 # Local application imports
 from grid_search_app.grid_search import SearchSquareGrid
 
-
-db_connect = create_engine(
-    'sqlite:////home/len/databases/grid_search.sqlite')
+# Global variables
 app = Flask(__name__)
 api = Api(app)
+
+
+def connect_to_database(path, name):
+    
+    db_location = Path(path)
+    db_path = db_location.joinpath(name)
+
+    db_connect = create_engine(
+        f'sqlite:///{db_path}'
+    )
+    return db_connect
 
 def get_timestamp():
 
@@ -156,4 +167,33 @@ api.add_resource(User, '/users')
 api.add_resource(Admin, '/admin')
 
 if __name__ == '__main__':
+    
+    parser = argparse.ArgumentParser()
+
+    parser.add_argument(
+        '-p',
+        '--path',
+        type=str,
+        required=True,
+        help='The path where your database is located'
+    )
+
+    parser.add_argument(
+        '-n',
+        '--name',
+        type=str,
+        required=True,
+        help='The name of your database'
+    )
+
+    options = parser.parse_args()
+
+    if options.path is None:
+        raise Exception('You have to provide a path where your database is located')
+
+    if options.name is None:
+        raise Exception('You have to provide the name of your database')
+
+    db_connect = connect_to_database(options.path, options.name)
+    
     app.run(port='5002')

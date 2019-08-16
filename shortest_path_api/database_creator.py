@@ -5,10 +5,8 @@ from pathlib import Path
 # Third party imports
 from sqlalchemy import create_engine
 
+"""  database_creator.py 
 
-def create_database(path, name):
-    """ create_database(path, name)
-    
     Creates a database with four columns 
     - id VARCHAR NOT NULL
     - grid VARCHAR
@@ -34,23 +32,6 @@ def create_database(path, name):
     ---------
     >>> python3 database_creator.py --path=/home/user/databases --name=my_db.sqlite
     """
-
-    to_here = Path(path)
-    db_path = to_here.joinpath(name)
-
-    db_uri = f"sqlite:///{db_path}"
-
-    engine = create_engine(db_uri)
-
-    # create table
-    engine.execute('CREATE TABLE "GridSearch" ('
-                'id VARCHAR NOT NULL,'
-                'grid VARCHAR,'
-                'time VARCHAR,'
-                'result VARCHAR,'
-                'PRIMARY KEY (id));')
-
-    print(f"Database created in: {db_path}")
 
 if __name__ == '__main__':
 
@@ -79,5 +60,20 @@ if __name__ == '__main__':
 
     if options.name is None:
         raise Exception('You have to provide a name for your database like my_db.sqlite')
+    
+    db_location = Path(options.path)
+    db_path = db_location.joinpath(options.name)
 
-    create_database(options.path, options.name)
+    db_uri = f"sqlite:///{db_path}"
+
+    engine = create_engine(db_uri)
+
+    # create table
+    engine.execute('CREATE TABLE "GridSearch" ('
+                'id VARCHAR NOT NULL,'
+                'grid VARCHAR,'
+                'time VARCHAR,'
+                'result VARCHAR,'
+                'PRIMARY KEY (id));')
+
+    print(f"Database created in: {db_path}")
