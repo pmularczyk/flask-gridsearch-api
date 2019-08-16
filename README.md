@@ -67,7 +67,28 @@ Now the application is running in this location `http://127.0.0.1:5002/` and you
 
 ## Usage from command line
 
-If you want to use curl there are some examples given below. Feel free to use python requests library as well, this would look something like this:
+If you want to use curl there are some examples given below. 
+
+### POST
+
+```
+curl -d "data=oop-xox-mox&size=3" -H "Content-Type: application/x-www-form-urlencoded" -X POST http://127.0.0.1:5002/users
+
+curl -d '{"data":"oop-xox-mox", "size":"3"}' -H "Content-Type: application/json" -X POST http://127.0.0.1:5002/users
+```
+
+### GET
+
+```
+curl -i -H "Accept: application/json" -H "Content-Type: application/x-www-form-urlencoded" -X GET http://127.0.0.1:5002/admin
+
+curl -i -H "Accept: application/json" -H "Content-Type: application/json" -X GET http://127.0.0.1:5002/admin
+
+```
+
+### Requests library
+
+Feel free to use python requests library as well, this would look something like this:
 ```
 import json
 import requests
@@ -84,22 +105,5 @@ try:
 
 except requests.exceptions.RequestException as e:
     print(f'Error: {e}')
-
-```
-
-### POST
-
-```
-curl -d "data=oop-xox-mox&size=3" -H "Content-Type: application/x-www-form-urlencoded" -X POST http://127.0.0.1:5002/users
-
-curl -d '{"data":"oop-xox-mox", "size":"3"}' -H "Content-Type: application/json" -X POST http://127.0.0.1:5002/users
-```
-
-### GET
-
-```
-curl -i -H "Accept: application/json" -H "Content-Type: application/x-www-form-urlencoded" -X GET http://127.0.0.1:5002/admin
-
-curl -i -H "Accept: application/json" -H "Content-Type: application/json" -X GET http://127.0.0.1:5002/admin
 
 ```
