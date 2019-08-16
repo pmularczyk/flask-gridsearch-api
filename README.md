@@ -107,3 +107,5 @@ except requests.exceptions.RequestException as e:
     print(f'Error: {e}')
 
 ```
+
+[flowchart](flowchart.png)
